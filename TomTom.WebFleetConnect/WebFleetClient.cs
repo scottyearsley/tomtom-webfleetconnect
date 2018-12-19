@@ -1,33 +1,26 @@
 using System;
 using System.Net.Http;
+using TomTom.WebFleetConnect.Models;
 
 namespace TomTom.WebFleetConnect
 {
     public class WebFleetClient
     {
-        private readonly string _accountName;
-        private readonly string _username;
-        private readonly string _password;
-        private readonly string _apiKey;
-
         /// <summary>
         /// Creates a new instance of the WebFleet client wrapper.
         /// </summary>
-        /// <param name="accountName">The account name.</param>
+        /// <param name="account">The account name.</param>
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <param name="apiKey">The API key.</param>
+        /// <param name="httpClient"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public WebFleetClient(string accountName, string username, string password, string apiKey)
+        public WebFleetClient(string account, string username, string password, string apiKey, 
+            IWebFleetHttpClient httpClient = null)
         {
-            _accountName = accountName;
-            _username = username;
-            _password = password;
-            _apiKey = apiKey;
-
-            if (string.IsNullOrWhiteSpace(accountName))
+            if (string.IsNullOrWhiteSpace(account))
             {
-                throw new ArgumentNullException(nameof(accountName));
+                throw new ArgumentNullException(nameof(account));
             }
             
             if (string.IsNullOrWhiteSpace(username))
@@ -45,8 +38,14 @@ namespace TomTom.WebFleetConnect
                 throw new ArgumentNullException(nameof(apiKey));
             }
 
-            var client = new HttpClient();
-            Users = new UserManagementOperations(client);
+            httpClient = httpClient ?? new WebFleetHttpClient(new HttpClient
+                {
+                    BaseAddress = ApiUrl.Root
+                }, 
+                new ApiSettings(account, username, password, apiKey)
+            );
+
+            Users = new UserManagementOperations(httpClient);
         }
         
         /// <summary>

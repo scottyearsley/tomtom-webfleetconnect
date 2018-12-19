@@ -16,7 +16,7 @@ namespace TomTom.WebFleetConnect
 
         public async Task<List<User>> ShowUsers()
         {
-            return _httpClient
+            return await _httpClient.Get<List<User>>("showUsers");
         }
     }
 }
