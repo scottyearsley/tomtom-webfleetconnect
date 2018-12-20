@@ -6,7 +6,7 @@ using TomTom.WebFleetConnect.Models;
 
 namespace TomTom.WebFleetConnect
 {
-    public class WebFleetHttpClient: IWebFleetHttpClient
+    internal class WebFleetHttpClient: IWebFleetHttpClient
     {
         private readonly HttpClient _httpClient;
         private readonly ApiSettings _apiSettings;
@@ -17,9 +17,9 @@ namespace TomTom.WebFleetConnect
             _apiSettings = apiSettings;
         }
         
-        public async Task<T> Get<T>(string action, object parameters)
+        public async Task<T> Get<T>(string action, ApiParameters parameters)
         {
-            var apiParams = ApiUrl.Create(_apiSettings, action);
+            var apiParams = ApiUrl.Create(_apiSettings, action, parameters);
             var response = await _httpClient.GetAsync(apiParams);
             var content = await response.Content.ReadAsStringAsync();
 

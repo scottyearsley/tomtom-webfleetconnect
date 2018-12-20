@@ -11,10 +11,10 @@ namespace TomTom.WebFleetConnect.Specs
         private const string Password = "password";
         private const string ApiKey = "api_key";
 
-        public static Uri CreateUri(string action)
+        public static Uri CreateUri(string action, ApiParameters parameters)
         {
             return new Uri(ApiUrl.Root, 
-                ApiUrl.Create(new ApiSettings(Account, Username, Password, ApiKey), action));
+                ApiUrl.Create(new ApiSettings(Account, Username, Password, ApiKey), action, parameters));
         }
         
         public static WebFleetClient CreateClient(HttpMessageHandler handler)

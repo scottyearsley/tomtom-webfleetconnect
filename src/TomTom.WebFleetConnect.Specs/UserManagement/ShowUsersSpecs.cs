@@ -45,7 +45,7 @@ namespace TomTom.WebFleetConnect.Specs.UserManagement
             [Then]
             public void ThenTheCorrectUrlIsInvoked()
             {
-                var expectedUri = SpecHelper.CreateUri("showUsers");
+                var expectedUri = SpecHelper.CreateUri("showUsers", new ApiParameters());
                 Assert.That(_httpRequest.RequestUri, Is.EqualTo(expectedUri));
             }
             

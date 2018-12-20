@@ -14,9 +14,30 @@ namespace TomTom.WebFleetConnect
             _httpClient = httpClient;
         }
 
-        public async Task<List<User>> ShowUsers()
+        /// <summary>
+        /// Returns a list of all existing users within the account along with the last recorded login time.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<User>> ShowUsers(UserFilter userFilter = null)
         {
-            return await _httpClient.Get<List<User>>("showUsers");
+            var parameters = new ApiParameters();
+            if (userFilter != null)
+            {
+                if (!string.IsNullOrWhiteSpace(userFilter.Username))
+                {
+                    parameters.Add("username_filter", userFilter.Username);
+                }
+                if (!string.IsNullOrWhiteSpace(userFilter.RealName))
+                {
+                    parameters.Add("realname_filter", userFilter.RealName);
+                }
+                if (!string.IsNullOrWhiteSpace(userFilter.Company))
+                {
+                    parameters.Add("company_filter", userFilter.Company);
+                }
+            }
+            
+            return await _httpClient.Get<List<User>>("showUsers", parameters);
         }
     }
 }
