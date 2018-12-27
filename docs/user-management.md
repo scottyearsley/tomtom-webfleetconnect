@@ -4,6 +4,14 @@
 
 ## ShowUsers()
 
+Returns all users for an account without any filtering.
+
+### Example
+
 ``` cs
-var test = new WebFleetClient("[account]");
+using TomTom.WebFleetConnect;
+
+var client = new WebFleetClient("[account]", "[username]", "[password]", "[api-key]");
+
+List<User> users = client.Users.ShowUsers();
 ```
