@@ -1,17 +1,36 @@
 # User Management
 
-* [ShowUsers](#showusers)
+* [ShowUsers(UserFilter filter = null)](#show-users)
 
-## ShowUsers()
+## Show Users
 
 Returns all users for an account without any filtering.
 
-### Example
+### Syntax
 
 ``` cs
-using TomTom.WebFleetConnect;
+List<User> ShowUsers(UserFilter = null)
+{
+}
+```
 
-var client = new WebFleetClient("[account]", "[username]", "[password]", "[api-key]");
+### Parameters
 
+*userFilter*
+> Type: [UserFilter](models/userfilter.md)  
+> User filter configuration
+
+### Examples
+
+``` cs
+// List users with no filtering
 List<User> users = client.Users.ShowUsers();
+
+// List users for a specific company
+List<User> companyUsers = client.Users.ShowUsers(
+    new UserFilter
+    {
+        Company = "[Company]"
+    }
+);
 ```
