@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TomTom.WebFleetConnect.Models;
 
-namespace TomTom.WebFleetConnect.Operations
+namespace TomTom.WebFleetConnect.Actions
 {
     public class UserManagement
     {
@@ -22,6 +22,19 @@ namespace TomTom.WebFleetConnect.Operations
             var parameters = new ApiParameters(OperationParameters.UserManagement.ShowUsers, userFilter);
             
             return await _httpClient.Get<List<User>>("showUsers", parameters);
+        }
+
+        /// <summary>
+        /// Used to change the password of your own user account.
+        /// </summary>
+        /// <param name="oldPassword">The current password of the user account.</param>
+        /// <param name="newPassword">The new password.</param>
+        public async Task ChangePassword(string oldPassword, string newPassword)
+        {
+            var parameters = new ApiParameters(OperationParameters.UserManagement.ChangePassword, 
+                new { oldPassword, newPassword });
+            
+            await _httpClient.Get(nameof(UserManagementOperations.ChangePassword), parameters);
         }
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using TomTom.WebFleetConnect.Operations;
+using TomTom.WebFleetConnect.Actions;
 
 namespace TomTom.WebFleetConnect.Models
 {
@@ -36,7 +36,8 @@ namespace TomTom.WebFleetConnect.Models
 
             foreach (var operationParam in operationParams)
             {
-                var property = properties.SingleOrDefault(p => p.Name == operationParam.WrapperName);
+                var property = properties.SingleOrDefault(p => 
+                    p.Name.Equals(operationParam.WrapperName, StringComparison.OrdinalIgnoreCase));
 
                 if (property != null)
                 {

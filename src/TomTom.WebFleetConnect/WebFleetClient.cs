@@ -1,7 +1,7 @@
 using System;
 using System.Net.Http;
+using TomTom.WebFleetConnect.Actions;
 using TomTom.WebFleetConnect.Models;
-using TomTom.WebFleetConnect.Operations;
 
 namespace TomTom.WebFleetConnect
 {
@@ -46,12 +46,12 @@ namespace TomTom.WebFleetConnect
                 new ApiSettings(account, username, password, apiKey)
             );
 
-            Users = new UserManagement(httpClient);
+            UserManagement = new UserManagement(httpClient);
         }
         
         /// <summary>
-        /// User management operations.
+        /// User management actions.
         /// </summary>
-        public UserManagement Users { get; }
+        public UserManagement UserManagement { get; }
     }
 }

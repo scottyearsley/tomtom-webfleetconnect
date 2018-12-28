@@ -6,5 +6,7 @@ namespace TomTom.WebFleetConnect
     public interface IWebFleetHttpClient
     {
         Task<T> Get<T>(string action, ApiParameters parameters = null);
+
+        Task Get(string action, ApiParameters parameters = null);
     }
 }

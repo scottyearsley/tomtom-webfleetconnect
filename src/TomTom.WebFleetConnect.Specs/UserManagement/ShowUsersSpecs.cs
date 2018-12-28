@@ -39,7 +39,7 @@ namespace TomTom.WebFleetConnect.Specs.UserManagement
             [When]
             public async Task WhenShowUsersIsInvokedWithoutParameters()
             {
-                _expected = await _sut.Users.ShowUsers();
+                _expected = await _sut.UserManagement.ShowUsers();
             }
 
             [Then]

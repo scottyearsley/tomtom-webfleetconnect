@@ -21,9 +21,37 @@ namespace TomTom.WebFleetConnect
         {
             var apiParams = ApiUrl.Create(_apiSettings, action, parameters);
             var response = await _httpClient.GetAsync(apiParams);
-            var content = await response.Content.ReadAsStringAsync();
+            return await HandleResponse<T>(response);
+        }
 
+        public async Task Get(string action, ApiParameters parameters = null)
+        {
+            var apiParams = ApiUrl.Create(_apiSettings, action, parameters);
+            var response = await _httpClient.GetAsync(apiParams);
+            await HandleResponse(response);
+        }
+
+        private static async Task<T> HandleResponse<T>(HttpResponseMessage response)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<ErrorResponse>(content);
+            if (error.IsInitialized)
+            {
+                // TODO: Create specific exception type
+                throw new Exception(error.Message);
+            }
             return JsonConvert.DeserializeObject<T>(content);
+        }
+
+        private static async Task HandleResponse(HttpResponseMessage response)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<ErrorResponse>(content);
+            if (error.IsInitialized)
+            {
+                // TODO: Create specific exception type
+                throw new Exception(error.Message);
+            }
         }
     }
 }

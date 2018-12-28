@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using TomTom.WebFleetConnect.Models;
 
-namespace TomTom.WebFleetConnect.Operations
+namespace TomTom.WebFleetConnect.Actions
 {
     internal static class OperationParameters
     {
@@ -17,13 +17,22 @@ namespace TomTom.WebFleetConnect.Operations
                     ( nameof(UserFilter.Username), "company_username", false ),
                     ( nameof(UserFilter.RealName), "company_realname", false ),
                 }  
+            },
+            { 
+                UserManagement.ChangePassword, 
+                new List<(string WrapperName, string ConnectName, bool Required)>
+                {
+                    ( "OldPassword", "oldpassword", true ),
+                    ( "NewPassword", "newpassword", true ),
+                }  
             }
         };
     }
 
     internal class UserManagementOperations
     {
-        public readonly string ShowUsers = "Users_ShowUsers";
+        public readonly string ShowUsers = "showUsers";
+        public readonly string ChangePassword = "changePasswords";
     }
 
     internal class ParameterMap: Dictionary<string, List<(string WrapperName, string ConnectName, bool Required)>>
