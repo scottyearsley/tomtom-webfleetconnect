@@ -17,7 +17,7 @@ namespace TomTom.WebFleetConnect.Actions
         /// Returns a list of all existing users within the account along with the last recorded login time.
         /// </summary>
         /// <returns></returns>
-        public async Task<List<User>> ShowUsers(UserFilter userFilter = null)
+        public async Task<List<User>> ShowUsersAsync(UserFilter userFilter = null)
         {
             var parameters = new ApiParameters(OperationParameters.UserManagement.ShowUsers, userFilter);
             
@@ -25,11 +25,20 @@ namespace TomTom.WebFleetConnect.Actions
         }
 
         /// <summary>
-        /// Used to change the password of your own user account.
+        /// Returns a list of all existing users within the account along with the last recorded login time.
+        /// </summary>
+        /// <returns></returns>
+        public List<User> ShowUsers(UserFilter userFilter = null)
+        {
+            return ShowUsersAsync(userFilter).Result;
+        }
+
+        /// <summary>
+        /// Used to change the password of the current user account.
         /// </summary>
         /// <param name="oldPassword">The current password of the user account.</param>
         /// <param name="newPassword">The new password.</param>
-        public async Task ChangePassword(string oldPassword, string newPassword)
+        public async Task ChangePasswordAsync(string oldPassword, string newPassword)
         {
             var parameters = new ApiParameters(OperationParameters.UserManagement.ChangePassword, 
                 new { oldPassword, newPassword });
